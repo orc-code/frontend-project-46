@@ -10,5 +10,5 @@ export default (filepath1, filepath2) => {
   const content1 = parseData(filepath1);
   const content2 = parseData(filepath2);
 
-  console.log(genDiff(content1, content2));
+  return genDiff(content1, content2);
 };
