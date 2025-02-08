@@ -1,13 +1,14 @@
 import fs from 'fs';
 import path from 'path';
-import parseData from './parser.js';
+import parse from './parser.js';
+import genDiff from './genDiff.js';
 
 const readFile = (filepath) => fs.readFileSync(path.resolve(filepath), 'utf-8');
+const parseData = (filepath) => parse(readFile(filepath), path.extname(filepath));
 
 export default (filepath1, filepath2) => {
-  const content1 = parseData(readFile(filepath1), path.extname(filepath1));
-  const content2 = parseData(readFile(filepath2), path.extname(filepath2));
+  const content1 = parseData(filepath1);
+  const content2 = parseData(filepath2);
 
-  console.log('🚀 ~ content1:', content1);
-  console.log('🚀 ~ content2:', content2);
+  console.log(genDiff(content1, content2));
 };
