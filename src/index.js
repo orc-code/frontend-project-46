@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import parse from './parser.js';
+import parse from './parsers.js';
 import genDiff from './genDiff.js';
 
 const readFile = (filepath) => fs.readFileSync(path.resolve(filepath), 'utf-8');
