@@ -9,4 +9,10 @@ lint:
 
 addPackage:
 	npm link
+
+test:
+	npm test
+
+test-coverage:
+	npm run coverage
 			
