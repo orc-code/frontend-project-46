@@ -7,7 +7,7 @@ import getFormattedTree from './formatters/index.js';
 const readFile = (filepath) => fs.readFileSync(path.resolve(filepath), 'utf-8');
 const parseData = (filepath) => parse(readFile(filepath), path.extname(filepath));
 
-export default (filepath1, filepath2, formatName) => {
+export default (filepath1, filepath2, formatName = 'stylish') => {
   const content1 = parseData(filepath1);
   const content2 = parseData(filepath2);
 
