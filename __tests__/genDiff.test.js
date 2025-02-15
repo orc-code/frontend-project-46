@@ -82,6 +82,15 @@ describe('genDiff', () => {
     expect(diff).toBe(diffNested);
   });
 
+  it('should return correct nested diff with yaml', () => {
+    const diff = genDiff(
+      getFixturePath('file1-nested.yaml'),
+      getFixturePath('file2-nested.yaml'),
+      'stylish',
+    );
+    expect(diff).toBe(diffNested);
+  });
+
   it('should throw error with bad extension', () => {
     expect(() => genDiff('__fixtures__/test.bad', '__fixtures__/file2.json')).toThrow(
       'Unsupported file format',
