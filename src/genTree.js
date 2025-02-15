@@ -7,17 +7,17 @@ export default (object1, object2) => {
     const sortedKeys = uniqueKeys.sort();
 
     const result = sortedKeys.flatMap((key) => {
+      const getItem = (type, value) => ({
+        type,
+        key,
+        value,
+        depth,
+      });
+
       const getNested = (object, firstValue, secondValue) => ({
         ...object,
         value: iter(firstValue, secondValue, depth + 2),
         isNest: true,
-      });
-
-      const getItem = (type, value) => ({
-        type,
-        depth,
-        key,
-        value,
       });
 
       const getAdded = (value) => {
@@ -31,6 +31,12 @@ export default (object1, object2) => {
 
         return isObject(value) ? getNested(item, value, value) : item;
       };
+
+      const getUpdated = (value1, value2) => ({
+        type: 'updated',
+        key,
+        values: [getRemoved(value1), getAdded(value2)],
+      });
 
       const value1 = obj1[key];
       const value2 = obj2[key];
@@ -48,7 +54,7 @@ export default (object1, object2) => {
       }
 
       if (value1 !== value2) {
-        return [getRemoved(value1), getAdded(value2)];
+        return getUpdated(value1, value2);
       }
 
       return getItem('default', value1);

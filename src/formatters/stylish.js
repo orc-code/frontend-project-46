@@ -17,16 +17,18 @@ export default (tree) => {
       const { type, key, value, depth, isNest = false } = obj;
       const prefix = getPrefix(type);
 
-      return `${getSpace(depth)}${prefix}${key}: ${
-        isNest ? `{\n${iter(value)}\n${getSpace(depth + 1)}}` : value
-      }`;
+      if (isNest) {
+        return `${getSpace(depth)}${prefix}${key}: {\n${iter(value)}\n${getSpace(depth + 1)}}`;
+      }
+
+      if (type === 'updated') {
+        return iter(obj.values);
+      }
+
+      return `${getSpace(depth)}${prefix}${key}: ${value}`;
     };
 
-    if (Array.isArray(items)) {
-      return items.map(stringify).join('\n');
-    }
-
-    return stringify(items);
+    return items.map(stringify).join('\n');
   };
 
   return `{\n${iter(tree)}\n}`;

@@ -3,6 +3,7 @@ import genDiff from '../src/index.js';
 
 let diffFlat;
 let diffNested;
+let plainDiff;
 
 const getFixturePath = (filename) => path.resolve('__fixtures__', filename);
 
@@ -60,6 +61,18 @@ beforeAll(() => {
         fee: 100500
     }
 }`;
+
+  plainDiff = `Property 'common.follow' was added with value: false
+Property 'common.setting2' was removed
+Property 'common.setting3' was updated. From true to null
+Property 'common.setting4' was added with value: 'blah blah'
+Property 'common.setting5' was added with value: [complex value]
+Property 'common.setting6.doge.wow' was updated. From '' to 'so much'
+Property 'common.setting6.ops' was added with value: 'vops'
+Property 'group1.baz' was updated. From 'bas' to 'bars'
+Property 'group1.nest' was updated. From [complex value] to 'str'
+Property 'group2' was removed
+Property 'group3' was added with value: [complex value]`;
 });
 
 describe('genDiff', () => {
@@ -101,5 +114,14 @@ describe('genDiff', () => {
     expect(() => genDiff('__fixtures__/file1.json', '__fixtures__/file2.json', 'bad')).toThrow(
       'Unsupported format',
     );
+  });
+
+  it('should return plain diff', () => {
+    const diff = genDiff(
+      getFixturePath('file1-nested.json'),
+      getFixturePath('file2-nested.json'),
+      'plain',
+    );
+    expect(diff).toBe(plainDiff);
   });
 });
