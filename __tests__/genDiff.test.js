@@ -2,19 +2,12 @@ import fs from 'fs';
 import path from 'path';
 import genDiff from '../src/index.js';
 
-let diffFlat;
-let diffNested;
-let plainDiff;
-let jsonDiff;
-
 const getFixturePath = (filename) => path.resolve('__fixtures__', filename);
 
-beforeAll(() => {
-  diffFlat = fs.readFileSync(getFixturePath('diffFlat.txt'), 'utf-8').trim();
-  diffNested = fs.readFileSync(getFixturePath('diffNested.txt'), 'utf-8').trim();
-  plainDiff = fs.readFileSync(getFixturePath('plainDiff.txt'), 'utf-8').trim();
-  jsonDiff = fs.readFileSync(getFixturePath('jsonDiff.txt'), 'utf-8').trim();
-});
+const diffFlat = fs.readFileSync(getFixturePath('diffFlat.txt'), 'utf-8').trim();
+const diffNested = fs.readFileSync(getFixturePath('diffNested.txt'), 'utf-8').trim();
+const plainDiff = fs.readFileSync(getFixturePath('plainDiff.txt'), 'utf-8').trim();
+const jsonDiff = fs.readFileSync(getFixturePath('jsonDiff.txt'), 'utf-8').trim();
 
 describe('genDiff', () => {
   describe('should return correct stylish format diff', () => {
