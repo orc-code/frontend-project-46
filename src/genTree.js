@@ -4,7 +4,7 @@ export default (object1, object2) => {
   const iter = (obj1, obj2, depth = 1) => {
     const keys = Object.keys({ ...obj1, ...obj2 });
     const uniqueKeys = keys.filter((key, index, arr) => arr.indexOf(key) === index);
-    const sortedKeys = uniqueKeys.sort();
+    const sortedKeys = uniqueKeys.slice().sort();
 
     const result = sortedKeys.flatMap((key) => {
       const getItem = (type, value) => ({
