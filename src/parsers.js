@@ -9,5 +9,5 @@ export default (content, extension) => {
     return yaml.load(content);
   }
 
-  throw new Error('Unsupported file format');
+  throw new Error(`Unsupported file format - ${extension}`);
 };
