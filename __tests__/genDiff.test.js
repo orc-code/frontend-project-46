@@ -41,7 +41,7 @@ describe('genDiff', () => {
 
     it('should throw error with bad extension', () => {
       expect(() => genDiff('__fixtures__/test.bad', '__fixtures__/file2.json')).toThrow(
-        'Unsupported file format - .bad',
+        'Unsupported file format - bad',
       );
     });
 

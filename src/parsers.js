@@ -1,11 +1,11 @@
 import yaml from 'js-yaml';
 
 export default (content, extension) => {
-  if (extension === '.json') {
+  if (extension === 'json') {
     return JSON.parse(content);
   }
 
-  if (extension === '.yaml' || extension === '.yml') {
+  if (extension.match(/ya?ml/)) {
     return yaml.load(content);
   }
 
