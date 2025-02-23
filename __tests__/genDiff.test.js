@@ -46,6 +46,11 @@ describe.each([
   });
 });
 
+it('empty format argument should return correct stylish diff', () => {
+  const diff = genDiff(getFixturePath('file1-nested.json'), getFixturePath('file2-nested.json'));
+  expect(diff).toBe(stylishDiff);
+});
+
 describe.each([
   {
     filepath1: 'test.bad',

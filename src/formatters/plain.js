@@ -1,22 +1,23 @@
+import { isObject } from '../utility.js';
+
+const getStringifiedValue = ({ type, value }) => {
+  if (type === 'complex value' || isObject(value)) {
+    return '[complex value]';
+  }
+
+  if (typeof value === 'string') {
+    return `'${value}'`;
+  }
+
+  return value;
+};
+
 export default (tree) => {
   const iter = (items, path = '') => {
     const result = items.reduce((acc, item) => {
       const { type, key, value } = item;
-      const getStringifiedValue = (el) => {
-        const { value: val, isNest = false } = el;
 
-        if (typeof val === 'string') {
-          return `'${val}'`;
-        }
-
-        if (isNest) {
-          return '[complex value]';
-        }
-
-        return val;
-      };
-
-      if (type === 'nested') {
+      if (type === 'complex value') {
         return [...acc, iter(value, `${path}${key}.`)];
       }
 
@@ -33,6 +34,7 @@ export default (tree) => {
 
       if (type === 'updated') {
         const [itemRemoved, itemAdded] = item.values;
+
         return [
           ...acc,
           `Property '${path}${key}' was updated. From ${getStringifiedValue(

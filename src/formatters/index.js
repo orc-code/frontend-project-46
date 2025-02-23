@@ -1,6 +1,5 @@
 import getStylish from './stylish.js';
 import getPlain from './plain.js';
-import getJson from './json.js';
 
 export default (tree, format) => {
   if (format === 'stylish') {
@@ -12,7 +11,7 @@ export default (tree, format) => {
   }
 
   if (format === 'json') {
-    return getJson(tree);
+    return JSON.stringify(tree);
   }
 
   throw new Error(`Unsupported format - ${format}`);
