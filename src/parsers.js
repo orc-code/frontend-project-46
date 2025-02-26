@@ -1,13 +1,13 @@
 import yaml from 'js-yaml';
 
-export default (content, extension) => {
-  if (extension === 'json') {
+export default (content, type) => {
+  if (type === 'json') {
     return JSON.parse(content);
   }
 
-  if (extension.match(/ya?ml/)) {
+  if (type.match(/ya?ml/)) {
     return yaml.load(content);
   }
 
-  throw new Error(`Unsupported file format - ${extension}`);
+  throw new Error(`Unsupported file format - ${type}`);
 };

@@ -1,18 +1,15 @@
-import { isObject } from './utility.js';
+import _ from 'lodash';
 
 export default (object1, object2) => {
   const iter = (obj1, obj2) => {
     const keys = [...new Set(Object.keys({ ...obj1, ...obj2 }))].toSorted();
 
     return keys.map((key) => {
-      const value1 = obj1[key];
-      const value2 = obj2[key];
-
-      if (isObject(value1) && isObject(value2)) {
+      if (_.isPlainObject(obj1?.[key]) && _.isPlainObject(obj2?.[key])) {
         return {
-          type: 'complex value',
+          type: 'nested',
           key,
-          value: iter(value1, value2),
+          value: iter(obj1[key], obj2[key]),
         };
       }
 
@@ -20,7 +17,7 @@ export default (object1, object2) => {
         return {
           type: 'added',
           key,
-          value: value2,
+          value: obj2?.[key],
         };
       }
 
@@ -28,33 +25,22 @@ export default (object1, object2) => {
         return {
           type: 'removed',
           key,
-          value: value1,
+          value: obj1?.[key],
         };
       }
 
-      if (value1 !== value2) {
+      if (!_.isEqual(obj1?.[key], obj2?.[key])) {
         return {
           type: 'updated',
           key,
-          values: [
-            {
-              type: 'removed',
-              key,
-              value: value1,
-            },
-            {
-              type: 'added',
-              key,
-              value: value2,
-            },
-          ],
+          value: [obj1?.[key], obj2?.[key]],
         };
       }
 
       return {
-        type: 'default',
+        type: 'unchanged',
         key,
-        value: value1,
+        value: obj1?.[key],
       };
     });
   };

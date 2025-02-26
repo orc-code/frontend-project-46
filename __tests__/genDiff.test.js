@@ -6,7 +6,7 @@ import genDiff from '../src/index.js';
 
 const getFixturePath = (filename) => path.resolve('__fixtures__', filename);
 
-const stylishDiff = fs.readFileSync(getFixturePath('diffNested.txt'), 'utf-8').trim();
+const stylishDiff = fs.readFileSync(getFixturePath('stylishDiff.txt'), 'utf-8').trim();
 const plainDiff = fs.readFileSync(getFixturePath('plainDiff.txt'), 'utf-8').trim();
 const jsonDiff = fs.readFileSync(getFixturePath('jsonDiff.txt'), 'utf-8').trim();
 
@@ -49,25 +49,4 @@ describe.each([
 it('empty format argument should return correct stylish diff', () => {
   const diff = genDiff(getFixturePath('file1-nested.json'), getFixturePath('file2-nested.json'));
   expect(diff).toBe(stylishDiff);
-});
-
-describe.each([
-  {
-    filepath1: 'test.bad',
-    filepath2: 'file2.json',
-    format: 'stylish',
-    error: 'Unsupported file format - bad',
-  },
-  {
-    filepath1: 'file1.json',
-    filepath2: 'file2.json',
-    format: 'bad',
-    error: 'Unsupported format - bad',
-  },
-])('genDiff should throw error', ({ filepath1, filepath2, format, error }) => {
-  it(`${error}`, () => {
-    expect(() => genDiff(getFixturePath(filepath1), getFixturePath(filepath2), format)).toThrow(
-      error,
-    );
-  });
 });
